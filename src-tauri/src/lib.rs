@@ -1,4 +1,6 @@
+pub mod sqlite;
 use tauri_plugin_global_shortcut::{Code, GlobalShortcutExt, Modifiers, Shortcut};
+use crate::sqlite::tools::password::{add_tool_password, list_tool_password, update_tool_password, delete_tool_password};
 use std::sync::{Arc, Mutex};
 use tauri::{
     menu::{Menu, MenuItem},
@@ -95,6 +97,11 @@ pub fn run() {
                 .build(),
         )
         .setup(|app| {
+            // 初始化数据库并自动迁移
+            tauri::async_runtime::block_on(async {
+                crate::sqlite::SqliteDB::init("sqlite:./helper.db").await.expect("数据库初始化失败");
+            });
+
             // 初始化系统托盘
             create_tray(app.handle())?;
 
@@ -117,7 +124,12 @@ pub fn run() {
             Ok(())
         })
         .plugin(tauri_plugin_opener::init())
-        .invoke_handler(tauri::generate_handler![])
+        .invoke_handler(tauri::generate_handler![
+            add_tool_password,
+            list_tool_password,
+            update_tool_password,
+            delete_tool_password,
+        ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }
