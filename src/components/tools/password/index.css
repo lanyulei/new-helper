@@ -1,0 +1,105 @@
+/* 图标按钮高亮效果 */
+.pw-icon-btn {
+  cursor: pointer;
+  transition: color 0.2s, background 0.2s;
+  border-radius: 4px;
+  padding: 2px;
+}
+.pw-icon-btn:hover {
+  color: #1677ff;
+  background: none;
+}
+.pw-icon-delete:hover {
+  color: #1677ff;
+  background: none;
+}
+/* 密码工具样式 */
+.password-container {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+}
+
+.password-sidebar {
+  width: 240px;
+  border-right: 1px solid #eee;
+  padding-right: 16px;
+}
+
+.entry {
+  padding: 12px 8px;
+  border-radius: 8px;
+  transition: background 0.18s ease, transform 0.12s ease;
+  cursor: pointer;
+}
+.entry + .entry {
+  margin-top: 8px;
+}
+.entry:hover {
+  background: linear-gradient(90deg, #e2e8ff 0%, #dce3ff 100%);
+  transform: translateY(-2px);
+}
+.entry {
+  padding: 4px 8px;
+  min-height: 28px;
+  border-radius: 7px;
+  transition: background 0.18s ease, transform 0.12s ease;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.entry + .entry {
+  margin-top: 10px;
+}
+.entry:hover {
+  background: linear-gradient(90deg, #e2e8ff 0%, #dce3ff 100%);
+  transform: translateY(-1px);
+}
+.entry-selected {
+  background: linear-gradient(90deg, #e2e8ff 0%, #dce3ff 100%);
+  box-shadow: 0 2px 8px rgba(22, 119, 255, 0.10);
+  transform: none;
+}
+
+.entry-title {
+  margin-top: 4px;
+  font-size: 15px;
+  font-weight: 600;
+  color: #111827; /* 更明显的标题色 */
+}
+
+.entry-username {
+  font-size: 13px;
+  color: #6b7280; /* 暗一些的用户名颜色 */
+}
+
+.password-details {
+  flex: 1;
+  background: #ffffff;
+  border-radius: 10px;
+  padding: 18px;
+  box-shadow: 0 6px 20px rgba(15, 23, 42, 0.04);
+}
+
+.detail-row {
+  display: flex;
+  gap: 12px;
+  padding: 10px 0;
+  align-items: center;
+  border-bottom: 1px dashed rgba(0,0,0,0.04);
+}
+.detail-row:last-child { border-bottom: none; }
+
+.label {
+  min-width: 80px;
+  color: #374151;
+  font-weight: 600;
+}
+
+.value {
+  color: #111827;
+  background: #f8fafc;
+  padding: 8px 12px;
+  border-radius: 8px;
+}

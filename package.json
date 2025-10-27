@@ -16,7 +16,8 @@
     "@tauri-apps/plugin-opener": "^2",
     "antd": "^5.27.6",
     "react": "^19.1.0",
-    "react-dom": "^19.1.0"
+    "react-dom": "^19.1.0",
+    "react-router-dom": "^7.9.4"
   },
   "devDependencies": {
     "@bit-ocean/auto-import": "^0.0.54",
