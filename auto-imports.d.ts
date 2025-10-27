@@ -6,5 +6,5 @@
 // biome-ignore lint: disable
 export {}
 declare global {
-  const Flex: typeof import('antd').Flex
+
 }

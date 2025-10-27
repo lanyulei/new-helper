@@ -98,8 +98,19 @@ pub fn run() {
         )
         .setup(|app| {
             // 初始化数据库并自动迁移
+            let db_path = std::env::var("HELPER_DB_PATH").unwrap_or_else(|_| "./helper.db".to_string());
+            let db_path_obj = std::path::Path::new(&db_path);
+            if let Some(parent) = db_path_obj.parent() {
+                if !parent.exists() {
+                    std::fs::create_dir_all(parent).expect("无法创建数据库目录");
+                }
+            }
+            if !db_path_obj.exists() {
+                // 创建空数据库文件
+                std::fs::File::create(&db_path).expect("无法创建数据库文件");
+            }
             tauri::async_runtime::block_on(async {
-                crate::sqlite::SqliteDB::init("sqlite:./helper.db").await.expect("数据库初始化失败");
+                crate::sqlite::SqliteDB::init(&format!("sqlite:{}", db_path)).await.expect("数据库初始化失败");
             });
 
             // 初始化系统托盘

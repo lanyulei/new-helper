@@ -3,9 +3,6 @@ use sqlx::{sqlite::{SqlitePool, SqlitePoolOptions}, migrate::Migrator};
 use std::sync::Arc;
 use once_cell::sync::OnceCell;
 
-// 路径修正为 src-tauri/migrations，适配 sqlx build/run 目录
-// 推荐使用相对于 src-tauri 的路径
-static MIGRATOR: Migrator = sqlx::migrate!("./migrations");
 static DB_POOL: OnceCell<Arc<SqlitePool>> = OnceCell::new();
 
 pub struct SqliteDB;
@@ -17,7 +14,10 @@ impl SqliteDB {
             .max_connections(5)
             .connect(db_url)
             .await?;
-        MIGRATOR.run(&pool).await?;
+        // 动态获取迁移目录
+        let migrations_path = std::env::var("HELPER_MIGRATIONS_PATH").unwrap_or_else(|_| "./migrations".to_string());
+        let migrator = Migrator::new(std::path::Path::new(&migrations_path)).await.expect("加载迁移目录失败");
+        migrator.run(&pool).await?;
         DB_POOL.set(Arc::new(pool)).ok();
         Ok(())
     }
